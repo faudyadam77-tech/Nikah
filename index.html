@@ -7,51 +7,63 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
-    background: linear-gradient(180deg, #c8e6c9 0%, #e8f5e9 50%, #fff9c4 100%);
+    background: linear-gradient(180deg, #c8e6c9 0%, #e8f5e9 60%, #fff9c4 100%);
     min-height: 100vh;
-    padding: 20px;
-    overflow-x: hidden;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
   }
 
   .leaf {
     position: fixed;
-    font-size: 40px;
-    opacity: 0.6;
+    font-size: 30px;
+    opacity: 0.5;
     pointer-events: none;
+    z-index: 0;
   }
-  .leaf-tl { top: 10px; left: 10px; }
-  .leaf-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .leaf-tl { top: 5px; left: 5px; }
+  .leaf-tr { top: 5px; right: 5px; transform: scaleX(-1); }
 
   h1 {
     text-align: center;
     color: #2e7d32;
-    font-size: clamp(32px, 6vw, 56px);
+    font-size: clamp(22px, 4vw, 38px);
     text-shadow: 2px 2px 0 #fff;
-    margin-bottom: 10px;
-    line-height: 1.2;
+    line-height: 1;
+    margin-bottom: 4px;
   }
   h2 {
     text-align: center;
     color: #1b5e20;
-    font-size: clamp(24px, 5vw, 42px);
+    font-size: clamp(18px, 3.5vw, 32px);
     text-shadow: 2px 2px 0 #fff;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
 
+  /* Grid utama: isi hampir seluruh halaman */
   .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 18px;
-    max-width: 1000px;
-    margin: 0 auto 30px;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 12px;
+    flex: 1;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    align-content: stretch;
   }
 
   .card-container {
-    perspective: 1200px;
-    height: 180px;          /* kartu diperbesar */
+    perspective: 1500px;
     cursor: pointer;
+    min-height: 0;
   }
 
   .card {
@@ -68,19 +80,18 @@
 
   .card-face {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    border-radius: 18px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    border: 4px solid #fff;
-    overflow: hidden;       /* kunci: cegah konten keluar */
-    padding: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+    border: 5px solid #fff;
+    overflow: hidden;
+    padding: 8px;
   }
 
   .card-front {
@@ -92,33 +103,35 @@
     transform: rotateY(180deg);
   }
 
+  /* Angka SANGAT BESAR */
   .number {
-    font-size: clamp(60px, 10vw, 96px);  /* angka lebih besar */
+    font-size: clamp(70px, 12vw, 140px);
     font-weight: bold;
-    line-height: 1;
+    line-height: 0.9;
   }
 
   .label {
-    font-size: clamp(14px, 2.2vw, 18px);
+    font-size: clamp(14px, 2vw, 22px);
     font-weight: bold;
     color: #333;
-    margin-top: 10px;
+    margin-top: 6px;
     letter-spacing: 2px;
   }
 
-  /* ===== GRID HEWAN DI BELAKANG KARTU ===== */
+  /* ===== GRID HEWAN ===== */
   .animal-grid {
     display: grid;
     gap: 2px;
     width: 100%;
-    height: 75%;
+    flex: 1;
     align-content: center;
     justify-content: center;
     padding: 4px;
+    max-height: 70%;
   }
 
   .animal-grid .emoji {
-    font-size: clamp(22px, 3.5vw, 34px);
+    font-size: clamp(28px, 4.5vw, 52px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,14 +139,14 @@
   }
 
   .animal-name {
-    font-size: clamp(11px, 1.6vw, 14px);
+    font-size: clamp(12px, 1.6vw, 16px);
     color: #555;
     margin-top: 4px;
     text-align: center;
     font-weight: bold;
   }
 
-  /* Layout khusus per jumlah */
+  /* Layout per jumlah */
   .layout-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
   .layout-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
   .layout-3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr; }
@@ -146,18 +159,20 @@
 
   .layout-7 .emoji:nth-child(7),
   .layout-8 .emoji:nth-child(7),
-  .layout-9 .emoji:nth-child(7) {
-    grid-column: 1 / -1;
-    justify-self: center;
+  .layout-8 .emoji:nth-child(8),
+  .layout-9 .emoji:nth-child(7),
+  .layout-9 .emoji:nth-child(8),
+  .layout-9 .emoji:nth-child(9) {
+    /* biarkan di grid biasa */
   }
 
   .zero-display {
-    font-size: 60px;
+    font-size: clamp(50px, 8vw, 90px);
     color: #999;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 75%;
+    flex: 1;
   }
 
   /* Warna angka */
@@ -175,28 +190,32 @@
   .footer {
     text-align: center;
     color: #555;
-    font-size: 15px;
-    margin-top: 20px;
-  }
-  .footer .kids { font-size: 60px; margin-top: 10px; }
-
-  @media (max-width: 700px) {
-    .grid { grid-template-columns: repeat(5, 1fr); gap: 10px; }
-    .card-container { height: 140px; }
-    .number { font-size: 50px; }
-    .animal-grid .emoji { font-size: 20px; }
+    font-size: clamp(11px, 1.5vw, 14px);
+    margin-top: 6px;
+    padding-bottom: 4px;
   }
 
-  @media (max-width: 420px) {
-    .grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
-    .card-container { height: 110px; }
-    .number { font-size: 40px; }
-    .label { font-size: 10px; }
-    .animal-grid .emoji { font-size: 16px; }
+  /* RESPONSIVE: tablet */
+  @media (max-width: 900px) {
+    .grid { gap: 8px; }
+    .card-face { border-width: 4px; border-radius: 16px; }
+  }
+
+  /* RESPONSIVE: mobile - tetap 5 kolom tapi lebih rapat */
+  @media (max-width: 600px) {
+    body { padding: 4px; }
+    .grid { gap: 5px; }
+    .card-face { border-width: 3px; border-radius: 12px; padding: 4px; }
+    .animal-grid .emoji { font-size: clamp(18px, 4vw, 28px); }
+  }
+
+  @media (max-width: 400px) {
+    .grid { gap: 3px; }
+    .card-face { border-width: 2px; border-radius: 10px; }
   }
 
   .card-container:active .card:not(.flipped) {
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
 
   .pulse {
@@ -204,14 +223,14 @@
   }
   @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
+    50% { transform: scale(1.06); }
     100% { transform: scale(1); }
   }
 </style>
 </head>
 <body>
 
-<div class="leaf leaf-tl"></div>
+<div class="leaf leaf-tl">🌿</div>
 <div class="leaf leaf-tr">🌿</div>
 
 <h1>Ayo Belajar</h1>
@@ -220,8 +239,7 @@
 <div class="grid" id="grid"></div>
 
 <div class="footer">
-  <div>Ketuk 1x = dengar suara • Ketuk 2x = lihat hewan</div>
-  <div class="kids">👧 </div>
+  Ketuk 1x = dengar suara • Ketuk 2x = lihat hewan
 </div>
 
 <script>
@@ -229,11 +247,11 @@ const cards = [
   { n: 1, label: 'SATU',    color: '#e53935', animal: '🐄', name: 'Sapi' },
   { n: 2, label: 'DUA',     color: '#1e88e5', animal: '🐱', name: 'Kucing' },
   { n: 3, label: 'TIGA',    color: '#fb8c00', animal: '🐶', name: 'Anjing' },
-  { n: 4, label: 'EMPAT',   color: '#e53935', animal: '', name: 'Kelinci' },
+  { n: 4, label: 'EMPAT',   color: '#e53935', animal: '🐰', name: 'Kelinci' },
   { n: 5, label: 'LIMA',    color: '#1e88e5', animal: '🐟', name: 'Ikan' },
   { n: 6, label: 'ENAM',    color: '#fb8c00', animal: '🐦', name: 'Burung' },
   { n: 7, label: 'TUJUH',   color: '#e53935', animal: '🐸', name: 'Katak' },
-  { n: 8, label: 'DELAPAN', color: '#1e88e5', animal: '', name: 'Kupu-kupu' },
+  { n: 8, label: 'DELAPAN', color: '#1e88e5', animal: '🦋', name: 'Kupu-kupu' },
   { n: 9, label: 'SEMBILAN',color: '#fb8c00', animal: '🐝', name: 'Lebah' },
   { n: 0, label: 'NOL',     color: '#fb8c00', animal: '',   name: 'Tidak ada' },
 ];
@@ -294,7 +312,6 @@ cards.forEach(c => {
       <div class="animal-name">Nol — Tidak ada</div>
     `;
   } else {
-    // Buat grid emoji
     let emojisHtml = '';
     for (let i = 0; i < c.n; i++) {
       emojisHtml += `<div class="emoji">${c.animal}</div>`;
