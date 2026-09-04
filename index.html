@@ -15,7 +15,6 @@
     overflow-x: hidden;
   }
 
-  /* Hiasan daun */
   .leaf {
     position: fixed;
     font-size: 40px;
@@ -28,7 +27,7 @@
   h1 {
     text-align: center;
     color: #2e7d32;
-    font-size: clamp(28px, 5vw, 48px);
+    font-size: clamp(32px, 6vw, 56px);
     text-shadow: 2px 2px 0 #fff;
     margin-bottom: 10px;
     line-height: 1.2;
@@ -36,7 +35,7 @@
   h2 {
     text-align: center;
     color: #1b5e20;
-    font-size: clamp(22px, 4vw, 36px);
+    font-size: clamp(24px, 5vw, 42px);
     text-shadow: 2px 2px 0 #fff;
     margin-bottom: 30px;
   }
@@ -44,14 +43,14 @@
   .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    max-width: 900px;
+    gap: 18px;
+    max-width: 1000px;
     margin: 0 auto 30px;
   }
 
   .card-container {
-    perspective: 1000px;
-    height: 140px;
+    perspective: 1200px;
+    height: 180px;          /* kartu diperbesar */
     cursor: pointer;
   }
 
@@ -60,7 +59,7 @@
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .card.flipped {
@@ -72,13 +71,16 @@
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 16px;
+    -webkit-backface-visibility: hidden;
+    border-radius: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     border: 4px solid #fff;
+    overflow: hidden;       /* kunci: cegah konten keluar */
+    padding: 10px;
   }
 
   .card-front {
@@ -86,37 +88,76 @@
   }
 
   .card-back {
-    background: #fff;
+    background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
     transform: rotateY(180deg);
-    padding: 8px;
   }
 
   .number {
-    font-size: clamp(40px, 8vw, 72px);
+    font-size: clamp(60px, 10vw, 96px);  /* angka lebih besar */
     font-weight: bold;
     line-height: 1;
   }
 
   .label {
-    font-size: clamp(12px, 2vw, 16px);
+    font-size: clamp(14px, 2.2vw, 18px);
     font-weight: bold;
     color: #333;
-    margin-top: 8px;
-    letter-spacing: 1px;
+    margin-top: 10px;
+    letter-spacing: 2px;
   }
 
-  .animals {
-    font-size: clamp(20px, 3.5vw, 32px);
-    text-align: center;
-    line-height: 1.2;
-    word-break: break-all;
+  /* ===== GRID HEWAN DI BELAKANG KARTU ===== */
+  .animal-grid {
+    display: grid;
+    gap: 2px;
+    width: 100%;
+    height: 75%;
+    align-content: center;
+    justify-content: center;
+    padding: 4px;
+  }
+
+  .animal-grid .emoji {
+    font-size: clamp(22px, 3.5vw, 34px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
   .animal-name {
-    font-size: clamp(10px, 1.5vw, 13px);
+    font-size: clamp(11px, 1.6vw, 14px);
     color: #555;
     margin-top: 4px;
     text-align: center;
+    font-weight: bold;
+  }
+
+  /* Layout khusus per jumlah */
+  .layout-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .layout-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+  .layout-3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr; }
+  .layout-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .layout-5 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .layout-6 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .layout-7 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+  .layout-8 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+  .layout-9 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+
+  .layout-7 .emoji:nth-child(7),
+  .layout-8 .emoji:nth-child(7),
+  .layout-9 .emoji:nth-child(7) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .zero-display {
+    font-size: 60px;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75%;
   }
 
   /* Warna angka */
@@ -134,21 +175,26 @@
   .footer {
     text-align: center;
     color: #555;
-    font-size: 14px;
+    font-size: 15px;
     margin-top: 20px;
   }
+  .footer .kids { font-size: 60px; margin-top: 10px; }
 
-  .footer .kids {
-    font-size: 60px;
-    margin-top: 10px;
+  @media (max-width: 700px) {
+    .grid { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .card-container { height: 140px; }
+    .number { font-size: 50px; }
+    .animal-grid .emoji { font-size: 20px; }
   }
 
-  @media (max-width: 600px) {
-    .grid { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  @media (max-width: 420px) {
+    .grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
     .card-container { height: 110px; }
+    .number { font-size: 40px; }
+    .label { font-size: 10px; }
+    .animal-grid .emoji { font-size: 16px; }
   }
 
-  /* Animasi tap */
   .card-container:active .card:not(.flipped) {
     transform: scale(0.95);
   }
@@ -165,7 +211,7 @@
 </head>
 <body>
 
-<div class="leaf leaf-tl">🌿</div>
+<div class="leaf leaf-tl"></div>
 <div class="leaf leaf-tr">🌿</div>
 
 <h1>Ayo Belajar</h1>
@@ -179,38 +225,32 @@
 </div>
 
 <script>
-// ============ DATA KARTU ============
 const cards = [
-  { n: 1, label: 'SATU',   color: '#e53935', animal: '🐄', name: 'Sapi' },
-  { n: 2, label: 'DUA',    color: '#1e88e5', animal: '🐱', name: 'Kucing' },
-  { n: 3, label: 'TIGA',   color: '#fb8c00', animal: '🐶', name: 'Anjing' },
-  { n: 4, label: 'EMPAT',  color: '#e53935', animal: '🐰', name: 'Kelinci' },
-  { n: 5, label: 'LIMA',   color: '#1e88e5', animal: '🐟', name: 'Ikan' },
-  { n: 6, label: 'ENAM',   color: '#fb8c00', animal: '🐦', name: 'Burung' },
-  { n: 7, label: 'TUJUH',  color: '#e53935', animal: '🐸', name: 'Katak' },
-  { n: 8, label: 'DELAPAN',color: '#1e88e5', animal: '🦋', name: 'Kupu-kupu' },
-  { n: 9, label: 'SEMBILAN',color:'#fb8c00', animal: '🐝', name: 'Lebah' },
-  { n: 0, label: 'NOL',    color: '#fb8c00', animal: '',   name: 'Tidak ada' },
+  { n: 1, label: 'SATU',    color: '#e53935', animal: '🐄', name: 'Sapi' },
+  { n: 2, label: 'DUA',     color: '#1e88e5', animal: '🐱', name: 'Kucing' },
+  { n: 3, label: 'TIGA',    color: '#fb8c00', animal: '🐶', name: 'Anjing' },
+  { n: 4, label: 'EMPAT',   color: '#e53935', animal: '', name: 'Kelinci' },
+  { n: 5, label: 'LIMA',    color: '#1e88e5', animal: '🐟', name: 'Ikan' },
+  { n: 6, label: 'ENAM',    color: '#fb8c00', animal: '🐦', name: 'Burung' },
+  { n: 7, label: 'TUJUH',   color: '#e53935', animal: '🐸', name: 'Katak' },
+  { n: 8, label: 'DELAPAN', color: '#1e88e5', animal: '', name: 'Kupu-kupu' },
+  { n: 9, label: 'SEMBILAN',color: '#fb8c00', animal: '🐝', name: 'Lebah' },
+  { n: 0, label: 'NOL',     color: '#fb8c00', animal: '',   name: 'Tidak ada' },
 ];
 
-// ============ PRE-LOAD SUARA (agar cepat keluar) ============
 const synth = window.speechSynthesis;
 let voices = [];
 
 function loadVoices() {
   voices = synth.getVoices();
-  // Cari suara Indonesia, fallback ke default
-  const idVoice = voices.find(v => /id|indonesia/i.test(v.lang));
+  const idVoice = voices.find(v => /id|indonesia/i.test(v.lang))
+               || voices.find(v => /ms|malay/i.test(v.lang));
   return idVoice || voices[0];
 }
 
-// Panggil di awal agar browser siap
 if (synth) {
   loadVoices();
-  if (synth.onvoiceschanged !== undefined) {
-    synth.onvoiceschanged = loadVoices;
-  }
-  // "Warm-up" dengan utterance kosong agar engine siap
+  if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
   const warm = new SpeechSynthesisUtterance('');
   warm.volume = 0;
   synth.speak(warm);
@@ -218,7 +258,7 @@ if (synth) {
 
 function speak(text) {
   if (!synth) return;
-  synth.cancel(); // Hentikan suara sebelumnya agar langsung keluar
+  synth.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'id-ID';
   u.rate = 1.0;
@@ -229,7 +269,6 @@ function speak(text) {
   synth.speak(u);
 }
 
-// ============ BANGUN KARTU ============
 const grid = document.getElementById('grid');
 
 cards.forEach(c => {
@@ -239,7 +278,6 @@ cards.forEach(c => {
   const card = document.createElement('div');
   card.className = 'card';
 
-  // Depan: angka
   const front = document.createElement('div');
   front.className = 'card-face card-front';
   front.innerHTML = `
@@ -247,25 +285,30 @@ cards.forEach(c => {
     <div class="label">${c.label}</div>
   `;
 
-  // Belakang: hewan
   const back = document.createElement('div');
   back.className = 'card-face card-back';
-  let animalsHtml = '';
+
   if (c.n === 0) {
-    animalsHtml = '<div style="font-size:40px;color:#999;">∅</div>';
+    back.innerHTML = `
+      <div class="zero-display">🚫</div>
+      <div class="animal-name">Nol — Tidak ada</div>
+    `;
   } else {
-    animalsHtml = `<div class="animals">${(c.animal + ' ').repeat(c.n).trim()}</div>`;
+    // Buat grid emoji
+    let emojisHtml = '';
+    for (let i = 0; i < c.n; i++) {
+      emojisHtml += `<div class="emoji">${c.animal}</div>`;
+    }
+    back.innerHTML = `
+      <div class="animal-grid layout-${c.n}">${emojisHtml}</div>
+      <div class="animal-name">${c.n} ${c.name.toLowerCase()}</div>
+    `;
   }
-  back.innerHTML = `
-    ${animalsHtml}
-    <div class="animal-name">${c.n} ${c.name.toLowerCase()}</div>
-  `;
 
   card.appendChild(front);
   card.appendChild(back);
   container.appendChild(card);
 
-  // ============ LOGIKA KETUK ============
   let tapCount = 0;
   let tapTimer = null;
 
@@ -273,31 +316,24 @@ cards.forEach(c => {
     tapCount++;
 
     if (tapCount === 1) {
-      // Ketuk pertama: suara + animasi pulse
       speak(c.label.toLowerCase());
       card.classList.add('pulse');
       setTimeout(() => card.classList.remove('pulse'), 400);
-
-      // Reset counter setelah 1.5 detik jika tidak ada ketukan kedua
       tapTimer = setTimeout(() => { tapCount = 0; }, 1500);
-
     } else if (tapCount === 2) {
-      // Ketuk kedua: balik kartu + suara hewan
       clearTimeout(tapTimer);
       tapCount = 0;
-
       if (card.classList.contains('flipped')) {
         card.classList.remove('flipped');
       } else {
         card.classList.add('flipped');
-        // Sebutkan jumlah hewan setelah kartu berbalik
         setTimeout(() => {
           if (c.n === 0) {
             speak('nol, tidak ada');
           } else {
             speak(`${c.label.toLowerCase()}, ${c.name.toLowerCase()}`);
           }
-        }, 300);
+        }, 350);
       }
     }
   });
@@ -305,7 +341,6 @@ cards.forEach(c => {
   grid.appendChild(container);
 });
 
-// Unlock audio di mobile (butuh user gesture pertama)
 document.body.addEventListener('touchstart', () => {
   if (synth) {
     const u = new SpeechSynthesisUtterance('');
