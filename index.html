@@ -14,7 +14,6 @@
     font-family: 'Fredoka', 'Comic Sans MS', cursive;
   }
 
-  /* Latar Belakang Langit Ceria */
   body {
     background: linear-gradient(180deg, #87CEEB 0%, #B3E5FC 40%, #FFF9C4 100%);
     min-height: 100vh;
@@ -24,7 +23,6 @@
     position: relative;
   }
 
-  /* Hiasan Matahari & Awan */
   .sun {
     position: absolute; top: 20px; right: 20px; width: 70px; height: 70px;
     background: #FFD54F; border-radius: 50%;
@@ -46,11 +44,9 @@
   .cloud-2::after { width: 50px; height: 50px; top: -20px; left: 60px; }
   @keyframes floatCloud { 0% { transform: translateX(0); } 100% { transform: translateX(30px); } }
 
-  /* Judul */
   h1 { text-align: center; color: #FF5252; font-size: clamp(26px, 5vw, 46px); text-shadow: 3px 3px 0 #fff; line-height: 1; margin-bottom: 4px; z-index: 1; }
   h2 { text-align: center; color: #1E88E5; font-size: clamp(20px, 4vw, 36px); text-shadow: 3px 3px 0 #fff; margin-bottom: 10px; z-index: 1; }
 
-  /* Grid Kartu Full Page */
   .grid {
     display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr);
     gap: 12px; flex: 1; max-width: 1400px; width: 100%; margin: 0 auto; align-content: stretch; z-index: 1;
@@ -84,20 +80,18 @@
     background: var(--theme-color); padding: 4px 16px; border-radius: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.1);
   }
 
-  /* ===== GRID GAMBAR HEWAN NYATA ===== */
   .animal-grid {
     display: grid; gap: 4px; width: 100%; flex: 1; align-content: center; justify-content: center;
     padding: 4px; max-height: 70%; background: rgba(255,255,255,0.85); border-radius: 16px; border: 3px dashed var(--theme-color);
   }
 
-  /* Pengaturan ukuran gambar agar pas di kartu */
   .animal-grid .img-wrapper {
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;
   }
 
   .animal-grid img {
     width: 100%; height: 100%; 
-    object-fit: contain; /* KUNCI: Agar gambar tidak terpotong/gepeng */
+    object-fit: contain;
     filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1));
     transition: transform 0.3s ease;
   }
@@ -107,7 +101,6 @@
     background: var(--theme-color); padding: 4px 12px; border-radius: 15px; box-shadow: 0 3px 0 rgba(0,0,0,0.1);
   }
 
-  /* Layout Grid per Jumlah */
   .layout-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
   .layout-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
   .layout-3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr; }
@@ -120,7 +113,6 @@
 
   .zero-display { font-size: clamp(50px, 8vw, 90px); display: flex; align-items: center; justify-content: center; flex: 1; }
 
-  /* Tema Warna-warni */
   .theme-1 { --theme-color: #FF5252; } .theme-2 { --theme-color: #448AFF; }
   .theme-3 { --theme-color: #FFB300; } .theme-4 { --theme-color: #69F0AE; }
   .theme-5 { --theme-color: #E040FB; } .theme-6 { --theme-color: #FF6E40; }
@@ -130,10 +122,9 @@
   .footer {
     text-align: center; color: #fff; font-size: clamp(12px, 1.5vw, 16px); margin-top: 6px; padding-bottom: 4px;
     z-index: 1; font-weight: 600; text-shadow: 2px 2px 0 rgba(0,0,0,0.2); background: rgba(0,0,0,0.1);
-    border-radius: 20px; padding: 6px; max-width: 400px; margin-left: auto; margin-right: auto;
+    border-radius: 20px; padding: 6px; max-width: 500px; margin-left: auto; margin-right: auto;
   }
 
-  /* Responsive */
   @media (max-width: 900px) { .grid { gap: 8px; } .card-face { border-width: 5px; border-radius: 18px; } }
   @media (max-width: 600px) {
     body { padding: 4px; } .grid { gap: 5px; } .card-face { border-width: 4px; border-radius: 14px; padding: 4px; }
@@ -141,7 +132,6 @@
   }
   @media (max-width: 400px) { .grid { gap: 3px; } .card-face { border-width: 3px; border-radius: 10px; } }
 
-  /* Animasi Bounce */
   .bounce { animation: bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
   @keyframes bounce {
     0% { transform: scale(1); } 40% { transform: scale(0.9) rotate(-3deg); }
@@ -160,10 +150,9 @@
 
 <div class="grid" id="grid"></div>
 
-<div class="footer">👆 Ketuk 1x = Suara &nbsp;|&nbsp; 👆 Ketuk 2x = Lihat Hewan</div>
+<div class="footer">👆 Ketuk 1x = Suara Angka &nbsp;|&nbsp; 👆 Ketuk 2x Cepat = Balik Kartu</div>
 
 <script>
-// DATA GAMBAR DARI LINK YANG ANDA BERIKAN
 const animalImages = {
   sapi: 'https://cdn.jsdelivr.net/gh/faudyadam77-tech/Kumpulan-gambar@main/sapi.jpeg',
   kucing: 'https://cdn.jsdelivr.net/gh/faudyadam77-tech/Kumpulan-gambar@main/kucing.jpeg',
@@ -213,6 +202,9 @@ function speak(text) {
   synth.speak(u);
 }
 
+// ===== KONFIGURASI DOUBLE TAP =====
+const DOUBLE_TAP_THRESHOLD = 350; // milidetik - batas waktu antar ketukan untuk dianggap double tap
+
 const grid = document.getElementById('grid');
 const themes = ['theme-1','theme-2','theme-3','theme-4','theme-5','theme-6','theme-7','theme-8','theme-9','theme-0'];
 
@@ -223,13 +215,11 @@ cards.forEach((c, index) => {
   card.className = 'card';
   const cardTheme = themes[index];
 
-  // Sisi Depan
   const front = document.createElement('div');
   front.className = `card-face card-front ${cardTheme}`;
   front.style.borderColor = `var(--theme-color)`;
   front.innerHTML = `<div class="number" style="color:var(--theme-color)">${c.n}</div><div class="label">${c.label}</div>`;
 
-  // Sisi Belakang (Gambar Nyata)
   const back = document.createElement('div');
   back.className = `card-face card-back ${cardTheme}`;
   back.style.borderColor = `var(--theme-color)`;
@@ -239,7 +229,6 @@ cards.forEach((c, index) => {
   } else {
     let imgsHtml = '';
     for (let i = 0; i < c.n; i++) {
-      // Menggunakan tag IMG dengan object-fit: contain
       imgsHtml += `<div class="img-wrapper"><img src="${animalImages[c.imgKey]}" alt="${c.name}" loading="lazy"></div>`;
     }
     back.innerHTML = `<div class="animal-grid layout-${c.n}">${imgsHtml}</div><div class="animal-name">${c.n} ${c.name.toLowerCase()}</div>`;
@@ -249,29 +238,50 @@ cards.forEach((c, index) => {
   card.appendChild(back);
   container.appendChild(card);
 
-  let tapCount = 0;
-  let tapTimer = null;
+  // ===== LOGIKA SINGLE TAP vs DOUBLE TAP =====
+  let lastTapTime = 0;
+  let doubleTapHandled = false;
 
   container.addEventListener('click', () => {
-    tapCount++;
-    if (tapCount === 1) {
-      speak(c.label.toLowerCase());
-      card.classList.add('bounce');
-      setTimeout(() => card.classList.remove('bounce'), 500);
-      tapTimer = setTimeout(() => { tapCount = 0; }, 1500);
-    } else if (tapCount === 2) {
-      clearTimeout(tapTimer);
-      tapCount = 0;
+    const now = Date.now();
+    const timeSinceLastTap = now - lastTapTime;
+
+    if (timeSinceLastTap < DOUBLE_TAP_THRESHOLD && !doubleTapHandled) {
+      // === DOUBLE TAP TERDETEKSI ===
+      doubleTapHandled = true;
+      
+      // Balik kartu
       if (card.classList.contains('flipped')) {
         card.classList.remove('flipped');
       } else {
         card.classList.add('flipped');
-        setTimeout(() => {
-          if (c.n === 0) speak('nol, tidak ada');
-          else speak(`${c.label.toLowerCase()}, ${c.name.toLowerCase()}`);
-        }, 350);
       }
+
+      // Sebutkan angka + hewan
+      setTimeout(() => {
+        if (c.n === 0) {
+          speak('nol, tidak ada');
+        } else {
+          speak(`${c.label.toLowerCase()} ${c.name.toLowerCase()}`);
+        }
+      }, 300);
+
+      // Reset flag setelah animasi selesai
+      setTimeout(() => {
+        doubleTapHandled = false;
+      }, 700);
+
+    } else {
+      // === SINGLE TAP ===
+      // Hanya keluarkan suara angka (bisa berkali-kali)
+      speak(c.label.toLowerCase());
+      
+      // Animasi bounce
+      card.classList.add('bounce');
+      setTimeout(() => card.classList.remove('bounce'), 500);
     }
+
+    lastTapTime = now;
   });
 
   grid.appendChild(container);
